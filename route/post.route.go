@@ -2,6 +2,8 @@ package route
 
 import (
 	"github.com/G-rillei/go-simple-server/controller"
+	"github.com/G-rillei/go-simple-server/middleware"
+	"github.com/G-rillei/go-simple-server/model"
 	"github.com/G-rillei/go-simple-server/repository"
 	"github.com/G-rillei/go-simple-server/service"
 	"github.com/gofiber/fiber/v2"
@@ -16,4 +18,5 @@ func PostRoutes(api fiber.Router, conn *gorm.DB) {
 	controller := controller.NewPostController(service)
 
 	router.Get("/", controller.GetPosts)
+	router.Post("/", middleware.ValidateBody(&model.CreatePostModel{}), controller.CreatePost)
 }

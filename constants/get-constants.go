@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"sync"
+
+	"github.com/joho/godotenv"
 )
 
 type ServerConstants struct {
@@ -32,9 +34,11 @@ func GetConstants() Constants {
 	once.Do(func() {
 		port := os.Getenv("PORT")
 
-		fmt.Printf("Port: %v\n", port)
-
 		if port == "" {
+			if err := godotenv.Load(); err != nil {
+				panic("Error loading .env file")
+			}
+
 			port = ":3000"
 		} else {
 			port = ":" + port

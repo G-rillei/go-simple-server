@@ -9,3 +9,8 @@ type Post struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
+
+type CreatePostModel struct {
+	Title   string `json:"title" validate:"required,min=5,max=100"`
+	Content string `json:"content"`
+}
