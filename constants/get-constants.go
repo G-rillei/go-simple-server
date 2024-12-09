@@ -1,11 +1,8 @@
 package constants
 
 import (
-	"fmt"
 	"os"
 	"sync"
-
-	"github.com/joho/godotenv"
 )
 
 type Constants struct {
@@ -19,14 +16,12 @@ var (
 
 func GetConstants() Constants {
 	once.Do(func() {
-		if err := godotenv.Load(".env"); err != nil {
-			panic("No .env file found")
-		}
+		port := os.Getenv("PORT")
 
-		port := fmt.Sprintf(":%s", os.Getenv("PORT"))
-
-		if port != ":" {
+		if port == "" {
 			port = ":3000"
+		} else {
+			port = ":" + port
 		}
 
 		constantsInstace = Constants{
